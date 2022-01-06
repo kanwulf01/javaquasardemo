@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Lenovo
  */
-public interface PersonaInterface {
+public interface PersonaService {
     List<Persona> listar();
     Persona listarId(int id);
     Persona add(Persona p);
