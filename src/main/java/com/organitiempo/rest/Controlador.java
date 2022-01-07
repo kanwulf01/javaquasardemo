@@ -4,12 +4,16 @@
  */
 package com.organitiempo.rest;
 
+import static java.lang.Integer.parseInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -21,10 +25,20 @@ import java.util.List;
 public class Controlador {
     
     @Autowired
-    PersonaService service;
+    private PersonaService service;
     
     @GetMapping
     public List<Persona> listar() {
         return service.listar();
+    }
+    
+    
+    @RequestMapping(path={"/{ID}"})
+    @ResponseBody
+    public Persona getPersona(@PathVariable("ID") Integer ID) {
+        
+        
+        //Integer id_ = parseInt(id);
+        return service.listarId(ID);
     }
 }

@@ -33,9 +33,9 @@ public class PersonaServiceImp implements PersonaService {
     }
 
     @Override
-    public Persona listarId(int id) {
-        //return this.repository.findOne(id);
-        return new Persona();
+    public Persona listarId(Integer ID) {
+        return this.repository.findById(ID);
+        //return new Persona();
     }
 
     @Override

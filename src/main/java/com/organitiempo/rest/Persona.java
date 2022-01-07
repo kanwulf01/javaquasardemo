@@ -15,9 +15,9 @@ import javax.persistence.*;
 
 public class Persona {
     @Id
-    @Column
+    @Column(name = "ID", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private Integer ID;
     @Column
     private String Nombre;
     @Column
@@ -35,7 +35,7 @@ public class Persona {
         this.Apellidos = Apellidos;
     }
 
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
