@@ -40,7 +40,7 @@ public class PersonaServiceImp implements PersonaService {
 
     @Override
     public Persona add(Persona p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.repository.save(p);
     }
 
     @Override
