@@ -1,1 +1,6 @@
+com\organitiempo\rest\PersonaServiceImp.class
+com\organitiempo\rest\Persona.class
+com\organitiempo\rest\PersonaService.class
+com\organitiempo\rest\PersonaRepositorie.class
 com\organitiempo\rest\RestApplication.class
+com\organitiempo\rest\Controlador.class

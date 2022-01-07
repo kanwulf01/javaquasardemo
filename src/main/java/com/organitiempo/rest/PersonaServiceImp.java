@@ -34,7 +34,8 @@ public class PersonaServiceImp implements PersonaService {
 
     @Override
     public Persona listarId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //return this.repository.findOne(id);
+        return new Persona();
     }
 
     @Override

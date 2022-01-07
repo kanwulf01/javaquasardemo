@@ -13,7 +13,7 @@ import org.springframework.data.repository.Repository;
  */
 public interface PersonaRepositorie extends Repository<Persona, Integer> {
         List<Persona> findAll();
-        Persona findOne(int id);
+        //Persona findOne(int ID);
         Persona save(Persona p);
         void delete(Persona p);
         

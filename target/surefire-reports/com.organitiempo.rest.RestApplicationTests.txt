@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.organitiempo.rest.RestApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.159 s - in com.organitiempo.rest.RestApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.504 s - in com.organitiempo.rest.RestApplicationTests
