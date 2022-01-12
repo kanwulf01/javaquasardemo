@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,8 +40,21 @@ public class Controlador {
         return service.add(p);
     }
     
+    @PatchMapping
+    public Persona editPersona(@RequestBody Persona p) {
+        return service.edit(p);
+    }
     
-    @RequestMapping(path={"/{ID}"})
+    @RequestMapping(path={"/{id}"})
+    @ResponseBody
+    public Persona deletePersona(@PathVariable("id") Integer ID) {
+        
+        
+        //Integer id_ = parseInt(id);
+        return service.delete(ID);
+    }
+    
+    @RequestMapping(path={"/getPersona/{ID}"})
     @ResponseBody
     public Persona getPersona(@PathVariable("ID") Integer ID) {
         
@@ -48,4 +62,10 @@ public class Controlador {
         //Integer id_ = parseInt(id);
         return service.listarId(ID);
     }
+    
+    
+    
+    
+    
+    
 }
