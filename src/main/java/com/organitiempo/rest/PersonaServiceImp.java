@@ -45,7 +45,15 @@ public class PersonaServiceImp implements PersonaService {
 
     @Override
     public Persona edit(Persona p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Persona pp = new Persona();
+        
+        pp = this.repository.findById(p.getID());
+        
+        pp.setNombre(p.getNombre());
+        pp.setApellidos(p.getApellidos());
+        
+       return this.repository.save(pp);
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,8 +41,11 @@ public class Controlador {
         return service.add(p);
     }
     
-    @PatchMapping
+    
+    @PutMapping
+    //@RequestMapping(path={"/editPersonas"})
     public Persona editPersona(@RequestBody Persona p) {
+        //System.out.print("hOLA mUNDO");
         return service.edit(p);
     }
     
