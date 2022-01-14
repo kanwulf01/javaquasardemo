@@ -4,6 +4,9 @@
  */
 package com.organitiempo.rest;
 
+
+import com.organitiempo.rest.services.PersonaService;
+import com.organitiempo.rest.models.Persona;
 import static java.lang.Integer.parseInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 /**
  *
  * @author Lenovo
@@ -31,8 +33,15 @@ public class Controlador {
     @Autowired
     private PersonaService service;
     
+    /*
+    public Controlador(PersonaService services) {
+    this.service = services;
+    }
+    */
+    
     @GetMapping
     public List<Persona> listar() {
+        System.out.print("Entro a Listar!!!!!!!!!!!!!");
         return service.listar();
     }
     
@@ -49,13 +58,13 @@ public class Controlador {
         return service.edit(p);
     }
     
-    @RequestMapping(path={"/{id}"})
+    @RequestMapping(path={"/deletePersona/{id}"})
     @ResponseBody
-    public Persona deletePersona(@PathVariable("id") Integer ID) {
+    public void deletePersona(@PathVariable("id") Integer ID) {
         
         
         //Integer id_ = parseInt(id);
-        return service.delete(ID);
+        service.delete(ID);
     }
     
     @RequestMapping(path={"/getPersona/{ID}"})

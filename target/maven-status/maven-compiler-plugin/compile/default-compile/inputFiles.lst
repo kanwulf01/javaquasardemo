@@ -1,6 +1,6 @@
 C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\organitiempo\rest\RestApplication.java
-C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\organitiempo\rest\PersonaRepositorie.java
-C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\organitiempo\rest\PersonaService.java
+C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\services\persona\PersonaService.java
+C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\repository\persona\PersonaRepositorie.java
+C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\services\persona\PersonaServiceImp.java
 C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\organitiempo\rest\Controlador.java
-C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\organitiempo\rest\PersonaServiceImp.java
-C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\organitiempo\rest\Persona.java
+C:\Users\Lenovo\Documents\NetBeansProjects\rest\src\main\java\com\models\persona\Persona.java

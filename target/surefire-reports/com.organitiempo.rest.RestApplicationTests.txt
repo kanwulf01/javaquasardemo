@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.organitiempo.rest.RestApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 22.74 s <<< FAILURE! - in com.organitiempo.rest.RestApplicationTests
-contextLoads  Time elapsed: 0.002 s  <<< ERROR!
-java.lang.IllegalStateException: Failed to load ApplicationContext
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'personaRepositorie': FactoryBean threw exception on object creation; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract com.organitiempo.rest.Persona com.organitiempo.rest.PersonaRepositorie.findOne(java.lang.Integer)! No property findOne found for type Persona!
-Caused by: java.lang.IllegalArgumentException: Failed to create query for method public abstract com.organitiempo.rest.Persona com.organitiempo.rest.PersonaRepositorie.findOne(java.lang.Integer)! No property findOne found for type Persona!
-Caused by: org.springframework.data.mapping.PropertyReferenceException: No property findOne found for type Persona!
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.777 s - in com.organitiempo.rest.RestApplicationTests
