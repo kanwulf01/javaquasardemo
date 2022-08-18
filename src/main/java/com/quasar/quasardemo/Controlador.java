@@ -37,7 +37,7 @@ import org.springframework.http.ResponseEntity;
  */
 @CrossOrigin(origins = "http://localhost:4200", maxAge=3600)
 @RestController
-@RequestMapping({"/satelite"})
+@RequestMapping({"/topsecret"})
 public class Controlador {
     
     @Autowired
@@ -75,7 +75,7 @@ public class Controlador {
         CoordenadaDTO resxy = new CoordenadaDTO(10,90.1f);
         //return new ResponseSatelitesDTO<CoordenadaDTO> { data =  }
         
-        return ResponseEntity.ok().body(new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, "Hola mundo", "OK"));
+        return ResponseEntity.ok().body(new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, dataService.getMessage(), "OK"));
     }
     
     

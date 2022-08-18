@@ -25,7 +25,9 @@ public interface SateliteService {
     EntityReplyDTO add(RequesSateliteListDTO p);
     Satelite edit(Satelite p);
     void delete(int id);
-    CoordenadaDTO GetLocation(float dis1, float dist2, float dist3);
-    List<String> GetMessage(List<String> mess1, List<String> mess2, List<String> mess3);
+   // CoordenadaDTO GetLocation(float dis1, float dist2, float dist3);
+    CoordenadaDTO GetLocation(float ...distance);
+    //List<String> GetMessage(List<String> mess1, List<String> mess2, List<String> mess3);
+    String[] GetMessage(String[] ...mess1);
     
 }

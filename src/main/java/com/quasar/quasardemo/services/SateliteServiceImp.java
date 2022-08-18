@@ -11,10 +11,13 @@ package com.quasar.quasardemo.services;
 import com.quasar.quasardemo.DTOs.CoordenadaDTO;
 import com.quasar.quasardemo.DTOs.EntityReplyDTO;
 import com.quasar.quasardemo.DTOs.RequesSateliteListDTO;
+import com.quasar.quasardemo.DTOs.RequestSatelitesDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
 import com.quasar.quasardemo.repository.SateliteRepositorie;
 import com.quasar.quasardemo.models.Satelite;
+import com.quasardemo.excepcions.PostSateliteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +57,16 @@ public class SateliteServiceImp implements SateliteService {
     }
 
     @Override
-    public EntityReplyDTO add(RequesSateliteListDTO p) {
+    public EntityReplyDTO add(RequesSateliteListDTO list) {
         
         //Aca implementar el metodo que guardar la lista de satelites y sus datos 
-        
+        RequesSateliteListDTO p = new RequesSateliteListDTO();
+        p = this.validateAllData(list);
         CoordenadaDTO coordenadas = null;
-        List<String> SanizatedMessage = null;
+        String[] SanizatedMessage = null;
+        String[] messageArray = null;
+        String[][] listMessages = new String[p.getList().size()][p.getList().size()];
+        float[] distanceArr = new float[p.getList().size()];
         String message = "";
         System.out.println("Entro al service");
         System.out.println(p.getList().size());
@@ -68,26 +75,38 @@ public class SateliteServiceImp implements SateliteService {
             //Envio una arreglo con datos
             System.out.println("ENTRO ACA!!");
             //1. validar las distancias 
+            //||
             for(int i = 0; i < p.getList().size(); i++) {
-                if(p.getList().get(i).getDistance() != 0 && p.getList().get(i).getName() != "" && !p.getList().get(i).getName().isEmpty()) {
+                if(p.getList().get(i).getName() != "" && !p.getList().get(i).getName().isEmpty()) {
                     //si una distancia es igual a 0 no se puede calcular
                     //al menos una de las tres tiene que ser diferente de cero
-                    countData ++;
+                    
+                    distanceArr[i] = p.getList().get(i).getDistance();
+                    
+                    //Creo una array de string y le defino el tamaño con el mismo tamaño de la lista de mensajes
+                    // luego cambio el formato de la lista de mensajes a array casteandolo a un array de string y lo guardo dentro de 
+                    //la variable del arreglo de strings
+                    //Esto lo meto en una lista ya instanciada de arreglos de string y lo mando como parametro a la funcion GetMessages para calcular y sanitear los
+                    //mensajes
+                    messageArray = new String[p.getList().get(i).getMessages().length];
+                    messageArray = validateMessage(p.getList().get(i).getMessages());
+                    listMessages[i] = messageArray;
+                    //countData ++;
                 }
                 
                 //validar los arreglos de mensajes, si algun string no se puede leer o es diferente a las letras del abecedario se reemplaza por vacio
                 
-                   p.getList().get(i).setMessages(validateMessage(p.getList().get(i).getMessages()));
+                   //p.getList().get(i).setMessages(validateMessage(p.getList().get(i).getMessages())); // mensajes leidos
                    // en este punto ya modifique cada lista de mensajes
             };
             
             //aca debo contruir el mensaje y la coordenada a partir de la lista y las distancias
-            
-            if(countData > 0) {
-                coordenadas = this.GetLocation(p.getList().get(0).getDistance(), p.getList().get(1).getDistance(), p.getList().get(2).getDistance());
+            //guardar cada distancia en un arreglo de distancias
+            if(distanceArr.length > 0) {
+                coordenadas = this.GetLocation(distanceArr);
             }
             
-            System.out.println(coordenadas.getX() + "," + coordenadas.getY());
+            //System.out.println(coordenadas.getX() + "," + coordenadas.getY());
             
             
             
@@ -96,7 +115,8 @@ public class SateliteServiceImp implements SateliteService {
             
            
          
-         SanizatedMessage = this.GetMessage(p.getList().get(0).getMessages(), p.getList().get(1).getMessages(), p.getList().get(2).getMessages());
+         //SanizatedMessage = this.GetMessage(p.getList().get(0).getMessages(), p.getList().get(1).getMessages(), p.getList().get(2).getMessages());
+         SanizatedMessage = this.GetMessage(listMessages);
          
          for(String cadena: SanizatedMessage){
              System.out.println(cadena);
@@ -149,8 +169,10 @@ public class SateliteServiceImp implements SateliteService {
    // }
 
     @Override
-    public CoordenadaDTO GetLocation(float dis1, float dist2, float dist3) {
-        
+    public CoordenadaDTO GetLocation(float ...distances) {
+        System.out.println("Distancias que entran para ser calculadas");
+        for(int i = 0; i < distances.length; i++)
+            System.out.println(distances[i]);
         //Aca se simula el calculo
         CoordenadaDTO coor = new CoordenadaDTO(10.89f, -90.1f);
         
@@ -158,40 +180,52 @@ public class SateliteServiceImp implements SateliteService {
     }
 
     @Override
-    public  List<String> GetMessage(List<String> mess1, List<String> mess2, List<String> mess3) {
+    public  String[] GetMessage(String[] ...mess1) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         List<String> messageBetterState = new ArrayList<String>();
-        int minorAccert1 = 0;
-        int minorAccert2 = 0;
-        int minorAccert3 = 0;
+        Map<Integer,Integer> validateM = new HashMap<Integer, Integer>(); // este hash contendra, la posicion del array y el numero de veces que encontro cadenas vacias
+        int minorAccert = 0;
+        int arrMessagePosition = 0; 
         
-        for(String cadena : mess1) {
-            if(cadena.isEmpty()) {
-                minorAccert1++;
+        for(String[] messages : mess1) {
+            for(int i = 0; i < messages.length; i++) {
+                if(messages[i].isEmpty())
+                    minorAccert++;
             }
+            
+            validateM.put(arrMessagePosition, minorAccert);
+            minorAccert = 0;
+            arrMessagePosition++;
         }
         
-        for(String cadena : mess2) {
-            if(cadena.isEmpty()) {
-                minorAccert2++;
+        //recorro el hash y veo cual tiene el menor numero de cadenas vacias
+        int valorAnterior = 0;
+        int count = 0;
+        int keyData = 0;
+        for(Map.Entry<Integer, Integer> data : validateM.entrySet()){
+             
+            Integer key = data.getKey();
+            Integer emptyChar = data.getValue();
+            
+            if(count == 0){
+                //si es la primera iteracion asigno el primer valor a la variable de nombre variableAnterior para poder comprara con las siguiente siteraciones
+                //cual es el valor menor, este valor menor indica el menor array de mensajes que tuvo caracteres vacios para elegir el mensaje con menos
+                //caracteres vacios
+                valorAnterior = emptyChar;
+                count++;
+                continue;
             }
+            if(emptyChar<valorAnterior){
+                //asigno el valor anterior si es menor el actual al anterior y la key que representa la posicion de la lista de arreglos de string 
+                //que es el que tiene el array con menos caracteres vacios y por lo tanto el mensaje mas completo;
+                valorAnterior = emptyChar;
+                keyData = key;
+            }
+            
+            
         }
         
-        for(String cadena : mess3) {
-            if(cadena.isEmpty()) {
-                minorAccert3++;
-            }
-        }
-        
-        if(minorAccert1 <= minorAccert2 && minorAccert1 <= minorAccert3)
-            messageBetterState = mess1;
-        if(minorAccert2 <= minorAccert1 && minorAccert2 <= minorAccert3)
-            messageBetterState = mess2;
-        if(minorAccert3 <= minorAccert1 && minorAccert3 <= minorAccert2)
-            messageBetterState = mess3;
-        
-        
-        return messageBetterState;
+        return mess1[keyData];
     }
     
     private static boolean isFloat(String cadena){
@@ -203,23 +237,86 @@ public class SateliteServiceImp implements SateliteService {
 	}
     }
     
-    private static List<String> validateMessage(List<String> message){
+    private static String[] validateMessage(String[] message){
         int count = 0;
-        List<String> newMessage = new ArrayList<String>();
+        String[] newMessage = new String[message.length];
         for(String cadena :message) {
             
             if(cadena.isEmpty() || !cadena.matches("[a-zA-Z0-9]*") ){
                 System.out.println("Entro al if porque vino algo malo en la lista de mensakes");
-                newMessage.add("");
+                newMessage[count] = "";
                 count++;
                 continue;
             }
             
-            newMessage.add(cadena);
+            newMessage[count] = cadena;
             count++;
         }
         
         return newMessage;
+    }
+    
+    
+    private static RequesSateliteListDTO validateAllData(RequesSateliteListDTO data) {
+        //aca debo validar que toda la informacion sea correcta
+        
+        //validar si el campo nombre existe y es diferente a vacio null,
+        //validar qe el campo distance es diferente a null,
+        //validar que listaMessages es diferente a null 
+        //recorrer el arreglo que trae el objeto
+        List<RequestSatelitesDTO> newCleanList = new ArrayList<RequestSatelitesDTO>();
+        Map<Integer,String> validateM = new HashMap<Integer, String>();
+        
+        for(int i = 0; i < data.getList().size(); i++) {
+            //validar nulls
+            System.out.println("DISTANCIAS!!!!!");
+            System.out.println(data.getList().get(i).getDistance());
+            try {
+                if(data.getList().get(i).getName().isEmpty()){
+                    //se saca este objeto de la lista de satelites
+                    validateM.put(i,"name");
+                }    
+            }
+            catch(Exception ex) {
+                throw new PostSateliteException("", ex); 
+            }
+            
+            System.out.println(data.getList().get(i).getDistance());
+            try {
+                if(data.getList().get(i).getDistance() > 0){
+                    //se saca este objeto de la lista de satelites
+                    validateM.put(i,"distance");
+                }    
+            }
+            catch(Exception ex) {
+                throw new PostSateliteException("", ex); 
+            }
+            
+            try {
+                if(data.getList().get(i).getMessages().length == 0){
+                    //se saca este objeto de la lista de satelites
+                    validateM.put(i,"messages");
+                }    
+            }
+            catch(Exception ex) {
+                throw new PostSateliteException("", ex); 
+            }
+        }
+        
+        int count = 0;
+        for(RequestSatelitesDTO datas : data.getList()) {
+            if(validateM.containsKey(count)){
+                continue;
+            }
+            newCleanList.add(datas);
+        }
+        
+        System.out.println("El array limpio que va a trabajar");
+        for(RequestSatelitesDTO s : newCleanList){
+            System.out.println(s.getName());
+        }
+        return new RequesSateliteListDTO(newCleanList);
+        
     }
     
     

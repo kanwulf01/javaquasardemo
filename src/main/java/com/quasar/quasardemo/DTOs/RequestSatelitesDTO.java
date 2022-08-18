@@ -13,9 +13,9 @@ import java.util.List;
 public class RequestSatelitesDTO {
     public String _name;
     public float _distance;
-    public List<String> _messages = null;
+    public String[] _messages = null;
     
-    public RequestSatelitesDTO(String name, float distance, List<String> listaMessages ) {
+    public RequestSatelitesDTO(String name, float distance, String[] listaMessages ) {
         this._name = name;
         this._distance = distance;
         this._messages = listaMessages;
@@ -29,7 +29,7 @@ public class RequestSatelitesDTO {
         this._distance = _distance;
     }
 
-    public void setMessages(List<String> _messages) {
+    public void setMessages(String[] _messages) {
         this._messages = _messages;
     }
 
@@ -41,7 +41,12 @@ public class RequestSatelitesDTO {
         return _distance;
     }
 
-    public List<String> getMessages() {
-        return _messages;
+    public String[] getMessages() {
+        String[] messagesCastArray = new String[this._messages.length];
+        for(int i = 0; i < this._messages.length; i++) {
+            messagesCastArray[i] = this._messages[i];
+        }
+        
+        return messagesCastArray;
     }
 }
