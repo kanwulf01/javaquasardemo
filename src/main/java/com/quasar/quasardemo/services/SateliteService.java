@@ -26,6 +26,6 @@ public interface SateliteService {
     Satelite edit(Satelite p);
     void delete(int id);
     CoordenadaDTO GetLocation(float dis1, float dist2, float dist3);
-    List<String> GetMessage(int[] mess1, int[] mess2, int[] mess3);
+    List<String> GetMessage(List<String> mess1, List<String> mess2, List<String> mess3);
     
 }

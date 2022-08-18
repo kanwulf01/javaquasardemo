@@ -57,7 +57,14 @@ public class Controlador {
     
     @PostMapping
     public ResponseEntity<EntityReplyDTO> Add(@RequestBody RequesSateliteListDTO data1) {
-        service.add(data1);
+        
+        
+        EntityReplyDTO<CoordenadaDTO> dataService = service.add(data1);
+        
+        System.out.println("coordenadas repsuesta de service");
+        System.out.println(dataService.getData().getX());
+        System.out.println(dataService.getData().getY());
+        System.out.println(dataService.getMessage());
         //recibe la data aca
         
         // Se puede validar si la distancia es un numero, si es diferente a null o a cero

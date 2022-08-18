@@ -58,11 +58,13 @@ public class SateliteServiceImp implements SateliteService {
         
         //Aca implementar el metodo que guardar la lista de satelites y sus datos 
         
-        Map<String,Float> response = new HashMap<String, Float>();
+        CoordenadaDTO coordenadas = null;
+        List<String> SanizatedMessage = null;
+        String message = "";
         System.out.println("Entro al service");
         System.out.println(p.getList().size());
         int countData = 0;
-        if(p.getList().size() > 0) {
+        if(p.getList().size() > 0 && p.getList().size() <= 3) {
             //Envio una arreglo con datos
             System.out.println("ENTRO ACA!!");
             //1. validar las distancias 
@@ -76,24 +78,41 @@ public class SateliteServiceImp implements SateliteService {
                 //validar los arreglos de mensajes, si algun string no se puede leer o es diferente a las letras del abecedario se reemplaza por vacio
                 
                    p.getList().get(i).setMessages(validateMessage(p.getList().get(i).getMessages()));
-                
+                   // en este punto ya modifique cada lista de mensajes
             };
             
+            //aca debo contruir el mensaje y la coordenada a partir de la lista y las distancias
+            
+            if(countData > 0) {
+                coordenadas = this.GetLocation(p.getList().get(0).getDistance(), p.getList().get(1).getDistance(), p.getList().get(2).getDistance());
+            }
+            
+            System.out.println(coordenadas.getX() + "," + coordenadas.getY());
             
             
             
             
             // si al menos existe una distancia y un nombre de satelite se puede calcular su distancia de forma teorica
             
-         for(String cadena: p.getList().get(0).getMessages()){
+           
+         
+         SanizatedMessage = this.GetMessage(p.getList().get(0).getMessages(), p.getList().get(1).getMessages(), p.getList().get(2).getMessages());
+         
+         for(String cadena: SanizatedMessage){
              System.out.println(cadena);
-         }   
+             message = message + " " + cadena;
+         } 
+        }
+        else {
+            message = "false";
             
         }
         
-        CoordenadaDTO resxy = new CoordenadaDTO(10,90.1f);
+        System.out.println("MENSAJE CONCATENADO COMPLETO");
+        System.out.println(message);
         
-        return new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, "Hola mundo", "OK");
+        
+        return new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(coordenadas, message, "OK");
         
         //return new ResponseSatelitesDTO<>
         //return this.repository.save(p);
@@ -131,12 +150,48 @@ public class SateliteServiceImp implements SateliteService {
 
     @Override
     public CoordenadaDTO GetLocation(float dis1, float dist2, float dist3) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        //Aca se simula el calculo
+        CoordenadaDTO coor = new CoordenadaDTO(10.89f, -90.1f);
+        
+        return coor;
     }
 
     @Override
-    public List<String> GetMessage(int[] mess1, int[] mess2, int[] mess3) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public  List<String> GetMessage(List<String> mess1, List<String> mess2, List<String> mess3) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<String> messageBetterState = new ArrayList<String>();
+        int minorAccert1 = 0;
+        int minorAccert2 = 0;
+        int minorAccert3 = 0;
+        
+        for(String cadena : mess1) {
+            if(cadena.isEmpty()) {
+                minorAccert1++;
+            }
+        }
+        
+        for(String cadena : mess2) {
+            if(cadena.isEmpty()) {
+                minorAccert2++;
+            }
+        }
+        
+        for(String cadena : mess3) {
+            if(cadena.isEmpty()) {
+                minorAccert3++;
+            }
+        }
+        
+        if(minorAccert1 <= minorAccert2 && minorAccert1 <= minorAccert3)
+            messageBetterState = mess1;
+        if(minorAccert2 <= minorAccert1 && minorAccert2 <= minorAccert3)
+            messageBetterState = mess2;
+        if(minorAccert3 <= minorAccert1 && minorAccert3 <= minorAccert2)
+            messageBetterState = mess3;
+        
+        
+        return messageBetterState;
     }
     
     private static boolean isFloat(String cadena){
