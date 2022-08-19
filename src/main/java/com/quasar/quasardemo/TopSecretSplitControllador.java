@@ -8,6 +8,8 @@ import com.quasar.quasardemo.DTOs.CoordenadaDTO;
 import com.quasar.quasardemo.DTOs.EntityReplyDTO;
 import com.quasar.quasardemo.DTOs.RequesSateliteListDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
+import com.quasar.quasardemo.DTOs.SateliteNotNameDTO;
+import com.quasar.quasardemo.services.SateliteNoNameService;
 import com.quasar.quasardemo.services.SateliteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,28 +32,27 @@ public class TopSecretSplitControllador {
     
     
     @Autowired
-    private SateliteService service;
+    private SateliteNoNameService service;
     
     
     @RequestMapping(path={"/{satelite_name}"})
     @PostMapping
-    public ResponseEntity<EntityReplyDTO> Add(@RequestBody RequesSateliteListDTO data1, @PathVariable("satelite_name") String satelite_name) {
+    public ResponseEntity<EntityReplyDTO> Add(@RequestBody SateliteNotNameDTO data1, @PathVariable("satelite_name") String satelite_name) {
         
+        System.out.println("ENTRO AL CONTROLADOR DE SATELITE POR NOMBRE");
+        System.out.println(satelite_name);
+        EntityReplyDTO<CoordenadaDTO> dataService = service.add(data1, satelite_name);
         
-        EntityReplyDTO<CoordenadaDTO> dataService = service.add(data1);
-        
-        System.out.println("coordenadas repsuesta de service");
-        System.out.println(dataService.getData().getX());
-        System.out.println(dataService.getData().getY());
-        System.out.println(dataService.getMessage());
         //recibe la data aca
+        
+        
         
         // Se puede validar si la distancia es un numero, si es diferente a null o a cero
         
         
         System.out.println("Llego la info");
         //System.out.println(data1.size());
-        CoordenadaDTO resxy = new CoordenadaDTO(10,90.1f);
+        CoordenadaDTO resxy = new CoordenadaDTO(dataService.getData().getX(),dataService.getData().getY());
         //return new ResponseSatelitesDTO<CoordenadaDTO> { data =  }
         
         return ResponseEntity.ok().body(new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, dataService.getMessage(), "OK"));

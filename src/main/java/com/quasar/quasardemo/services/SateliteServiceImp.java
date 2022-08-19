@@ -13,6 +13,8 @@ import com.quasar.quasardemo.DTOs.EntityReplyDTO;
 import com.quasar.quasardemo.DTOs.RequesSateliteListDTO;
 import com.quasar.quasardemo.DTOs.RequestSatelitesDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
+import com.quasar.quasardemo.DTOs.SateliteNotNameDTO;
+import com.quasar.quasardemo.constants.Constants;
 import com.quasar.quasardemo.repository.SateliteRepositorie;
 import com.quasar.quasardemo.models.Satelite;
 import com.quasardemo.excepcions.PostSateliteException;
@@ -21,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,8 @@ public class SateliteServiceImp implements SateliteService {
     
     @Autowired
     private  SateliteRepositorie repository;
+    private String SateliteName;
+    public Map<Integer,String> satelites = new HashMap<Integer, String>();
    
     public SateliteServiceImp(SateliteRepositorie repo) {
         
@@ -61,6 +66,7 @@ public class SateliteServiceImp implements SateliteService {
         
         //Aca implementar el metodo que guardar la lista de satelites y sus datos 
         RequesSateliteListDTO p = new RequesSateliteListDTO();
+        
         p = this.validateAllData(list);
         CoordenadaDTO coordenadas = null;
         String[] SanizatedMessage = null;
@@ -82,7 +88,7 @@ public class SateliteServiceImp implements SateliteService {
                     //al menos una de las tres tiene que ser diferente de cero
                     
                     distanceArr[i] = p.getList().get(i).getDistance();
-                    
+                    satelites.put(i, p.getList().get(i).getName());
                     //Creo una array de string y le defino el tamaño con el mismo tamaño de la lista de mensajes
                     // luego cambio el formato de la lista de mensajes a array casteandolo a un array de string y lo guardo dentro de 
                     //la variable del arreglo de strings
@@ -170,11 +176,18 @@ public class SateliteServiceImp implements SateliteService {
 
     @Override
     public CoordenadaDTO GetLocation(float ...distances) {
-        System.out.println("Distancias que entran para ser calculadas");
         for(int i = 0; i < distances.length; i++)
             System.out.println(distances[i]);
         //Aca se simula el calculo
-        CoordenadaDTO coor = new CoordenadaDTO(10.89f, -90.1f);
+        //tengo un hash con la posicion del arrgelo que contiene cada objeto por nombre del satelite: variable satelites Map<position del arreglo, Nombre del satelite>
+        //tengo un enum con los nombres de los 3 satelites
+        //tengo una clase constantes con las 3 coordenadas de cada satelite
+        
+        //Para terminos practicos genero las coordenadas de forma aleatoria
+        Random rand = new Random();
+        float randomNum1 = 1.1f + ( 100.10f - 1.1f ) * rand.nextFloat();
+        float randomNum2 = 1.1f + ( 100.10f - 1.1f ) * rand.nextFloat();
+        CoordenadaDTO coor = new CoordenadaDTO(randomNum1, randomNum2);
         
         return coor;
     }
@@ -256,8 +269,8 @@ public class SateliteServiceImp implements SateliteService {
         return newMessage;
     }
     
-    
-    private static RequesSateliteListDTO validateAllData(RequesSateliteListDTO data) {
+    @Override
+    public RequesSateliteListDTO validateAllData(RequesSateliteListDTO data) {
         //aca debo validar que toda la informacion sea correcta
         
         //validar si el campo nombre existe y es diferente a vacio null,
@@ -317,6 +330,11 @@ public class SateliteServiceImp implements SateliteService {
         }
         return new RequesSateliteListDTO(newCleanList);
         
+    }
+
+    @Override
+    public SateliteNotNameDTO validateAllData(SateliteNotNameDTO data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
