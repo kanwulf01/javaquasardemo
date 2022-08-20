@@ -11,6 +11,7 @@ import com.quasar.quasardemo.DTOs.RequestSatelitesDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
 import com.quasar.quasardemo.DTOs.SateliteNotNameDTO;
 import com.quasar.quasardemo.repository.SateliteRepositorie;
+import static com.quasar.quasardemo.services.SateliteServiceImp.validateMessage;
 import com.quasardemo.excepcions.PostSateliteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,10 +40,10 @@ public class SateliteNoNameServiceImp implements SateliteNoNameService {
        SateliteNotNameDTO data =  validateAllData(p);
        
        CoordenadaDTO coordenadas = sateliteService.GetLocation(data.getDistance());
-       String[] arrayMessages = sateliteService.GetMessage(data.getMessages());
+       String[] arrayMessages = validateMessage(sateliteService.GetMessage(data.getMessages()));
        
        for(String message : arrayMessages) {
-           Message = message + Message;
+           Message = message + " " + Message;
        }
        return new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(coordenadas, Message, "OK");
     }

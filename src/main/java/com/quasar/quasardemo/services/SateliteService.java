@@ -21,16 +21,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface SateliteService {
-    List<Satelite> listar();
-    Satelite listarId(Integer ID);
+    
     EntityReplyDTO add(RequesSateliteListDTO p );
-    Satelite edit(Satelite p);
-    void delete(int id);
+   
    // CoordenadaDTO GetLocation(float dis1, float dist2, float dist3);
     CoordenadaDTO GetLocation(float ...distance);
     //List<String> GetMessage(List<String> mess1, List<String> mess2, List<String> mess3);
     String[] GetMessage(String[] ...mess1);
     RequesSateliteListDTO validateAllData(RequesSateliteListDTO data);
-    SateliteNotNameDTO validateAllData(SateliteNotNameDTO data);
     
 }

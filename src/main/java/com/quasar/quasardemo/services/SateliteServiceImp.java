@@ -47,19 +47,7 @@ public class SateliteServiceImp implements SateliteService {
         this.repository = repo;
     }
     
-     @Override
-    public List<Satelite> listar() {
-        
-        return this.repository.findAll();
-    }
-
-    @Override
-    public Satelite listarId(Integer ID) {
-        
-        System.out.println("LLEGO AL SERVICE IMP");
-        return this.repository.getOne(ID);
-        //return new Persona();
-    }
+    
 
     @Override
     public EntityReplyDTO add(RequesSateliteListDTO list) {
@@ -145,36 +133,6 @@ public class SateliteServiceImp implements SateliteService {
     }
 
     @Override
-    public Satelite edit(Satelite p) {
-        
-        Satelite pp = new Satelite();
-        
-        pp = this.repository.getOne(p.getID());
-        
-        //pp.setNombre(p.getNombre());
-        //pp.setApellidos(p.getApellidos());
-        
-       return this.repository.save(pp);
-    }
-
-    @Override
-    public void delete(int id) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
-        Satelite pp = new Satelite();
-        
-        pp = this.repository.getOne(id);
-        
-        this.repository.delete(pp);
-        
-    }
-
-    //@Override
-    //public Persona findPersonaByFirstname(String Apellidos) {
-      //  return this.repository.findPersonaByFirstname(Apellidos);
-   // }
-
-    @Override
     public CoordenadaDTO GetLocation(float ...distances) {
         for(int i = 0; i < distances.length; i++)
             System.out.println(distances[i]);
@@ -250,7 +208,7 @@ public class SateliteServiceImp implements SateliteService {
 	}
     }
     
-    private static String[] validateMessage(String[] message){
+    public static String[] validateMessage(String[] message){
         int count = 0;
         String[] newMessage = new String[message.length];
         for(String cadena :message) {
@@ -332,11 +290,6 @@ public class SateliteServiceImp implements SateliteService {
         
     }
 
-    @Override
-    public SateliteNotNameDTO validateAllData(SateliteNotNameDTO data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     
     
 }

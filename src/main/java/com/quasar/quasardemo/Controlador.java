@@ -49,12 +49,7 @@ public class Controlador {
     }
     */
     
-    @GetMapping
-    public List<Satelite> listar() {
-        System.out.print("Entro a Listar!!!!!!!!!!!!!");
-        return service.listar();
-    }
-    
+
     @PostMapping
     public ResponseEntity<EntityReplyDTO> Add(@RequestBody RequesSateliteListDTO data1) {
         
@@ -78,62 +73,6 @@ public class Controlador {
         return ResponseEntity.ok().body(new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, dataService.getMessage(), "OK"));
     }
     
-    
-    @PutMapping
-    //@RequestMapping(path={"/editPersonas"})
-    public Satelite editPersona(@RequestBody Satelite p) {
-        System.out.print("hOLA mUNDO");
-        return service.edit(p);
-    }
-    
-    @RequestMapping(path={"/deletePersona/{id}"})
-    @ResponseBody
-    public void deletePersona(@PathVariable("id") Integer ID) {
-        
-        
-        //Integer id_ = parseInt(id);
-        service.delete(ID);
-    }
-    
-    @RequestMapping(path={"/getPersona/{ID}"})
-    @ResponseBody
-    public Satelite getPersona(@PathVariable("ID") Integer ID) {
-        
-        System.out.println("AAAAAAAAAAAAAAAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println("AAAAAAAAAAAAAAAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        //Integer id_ = parseInt(id);
-        return service.listarId(ID);
-    }
-    
-    //@RequestMapping(path={"/getPersonaPorNombre/{Apellidos}"})
-    //@ResponseBody
-    //public Persona getPersona(@PathVariable("ID") String Apellidos) {
-        
-        
-        //Integer id_ = parseInt(id);
-        //return this.service.findPersonaByFirstname(Apellidos);
-    //}
-    
-    @RequestMapping(path={"/getPersona"})
-    @ResponseBody
-    public ResponseEntity<Map<String,ResponseDTO>> getReturnDouble() {
-        
-        //DEBOLVER 2 DATOS EN UNA UNICA RESPUESTA
-        //https://stackoverflow.com/questions/38117717/what-is-the-best-way-to-return-different-types-of-responseentity-in-spring-mvc-o
-        
-        Map<String,ResponseDTO> response = new HashMap<String, ResponseDTO>();
-
-        System.out.println("AAAAAAAAAAAAAAAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println("AAAAAAAAAAAAAAAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        //Integer id_ = parseInt(id);
-        ResponseDTO dto = new ResponseDTO();
-        dto.setIsbn(10);
-        dto.setName("Charles");
-        dto.setUserId(20);
-        response.put("MENSAJE", dto);
-        
-        return ResponseEntity.accepted().body(response);
-    }
     
     
     
