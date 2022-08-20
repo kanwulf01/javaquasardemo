@@ -35,7 +35,6 @@ import org.springframework.http.ResponseEntity;
  *
  * @author Lenovo
  */
-@CrossOrigin(origins = "http://localhost:4200", maxAge=3600)
 @RestController
 @RequestMapping({"/topsecret"})
 public class Controlador {
@@ -56,18 +55,7 @@ public class Controlador {
         
         EntityReplyDTO<CoordenadaDTO> dataService = service.add(data1);
         
-        System.out.println("coordenadas repsuesta de service");
-        System.out.println(dataService.getData().getX());
-        System.out.println(dataService.getData().getY());
-        System.out.println(dataService.getMessage());
-        //recibe la data aca
-        
-        // Se puede validar si la distancia es un numero, si es diferente a null o a cero
-        
-        
-        System.out.println("Llego la info");
-        //System.out.println(data1.size());
-        CoordenadaDTO resxy = new CoordenadaDTO(10,90.1f);
+        CoordenadaDTO resxy = new CoordenadaDTO(dataService.getData().getX(), dataService.getData().getY());
         //return new ResponseSatelitesDTO<CoordenadaDTO> { data =  }
         
         return ResponseEntity.ok().body(new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, dataService.getMessage(), "OK"));

@@ -17,5 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SateliteNoNameService {
     EntityReplyDTO add(SateliteNotNameDTO p, String NameSatelite);
-    SateliteNotNameDTO validateAllData(SateliteNotNameDTO data);
+    SateliteNotNameDTO validateAllData(SateliteNotNameDTO data, String SateliteName);
 }

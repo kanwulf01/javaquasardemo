@@ -15,6 +15,7 @@ public class SateliteNotNameDTO {
     public SateliteNotNameDTO(float distance, String[] listaMessages ) {
         this._distance = distance;
         this._messages = listaMessages;
+        
     }
 
     
@@ -31,11 +32,8 @@ public class SateliteNotNameDTO {
     }
 
     public String[] getMessages() {
-        String[] messagesCastArray = new String[this._messages.length];
-        for(int i = 0; i < this._messages.length; i++) {
-            messagesCastArray[i] = this._messages[i];
-        }
-        
-        return messagesCastArray;
+        return this._messages;
     }
+    
+    
 }

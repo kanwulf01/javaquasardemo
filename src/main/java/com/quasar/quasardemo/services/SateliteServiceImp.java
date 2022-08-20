@@ -62,12 +62,10 @@ public class SateliteServiceImp implements SateliteService {
         String[][] listMessages = new String[p.getList().size()][p.getList().size()];
         float[] distanceArr = new float[p.getList().size()];
         String message = "";
-        System.out.println("Entro al service");
-        System.out.println(p.getList().size());
         int countData = 0;
         if(p.getList().size() > 0 && p.getList().size() <= 3) {
             //Envio una arreglo con datos
-            System.out.println("ENTRO ACA!!");
+           
             //1. validar las distancias 
             //||
             for(int i = 0; i < p.getList().size(); i++) {
@@ -121,10 +119,6 @@ public class SateliteServiceImp implements SateliteService {
             message = "false";
             
         }
-        
-        System.out.println("MENSAJE CONCATENADO COMPLETO");
-        System.out.println(message);
-        
         
         return new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(coordenadas, message, "OK");
         
@@ -214,7 +208,6 @@ public class SateliteServiceImp implements SateliteService {
         for(String cadena :message) {
             
             if(cadena.isEmpty() || !cadena.matches("[a-zA-Z0-9]*") ){
-                System.out.println("Entro al if porque vino algo malo en la lista de mensakes");
                 newMessage[count] = "";
                 count++;
                 continue;
@@ -240,8 +233,7 @@ public class SateliteServiceImp implements SateliteService {
         
         for(int i = 0; i < data.getList().size(); i++) {
             //validar nulls
-            System.out.println("DISTANCIAS!!!!!");
-            System.out.println(data.getList().get(i).getDistance());
+            
             try {
                 if(data.getList().get(i).getName().isEmpty()){
                     //se saca este objeto de la lista de satelites
@@ -252,7 +244,7 @@ public class SateliteServiceImp implements SateliteService {
                 throw new PostSateliteException("", ex); 
             }
             
-            System.out.println(data.getList().get(i).getDistance());
+          
             try {
                 if(data.getList().get(i).getDistance() > 0){
                     //se saca este objeto de la lista de satelites
@@ -282,7 +274,7 @@ public class SateliteServiceImp implements SateliteService {
             newCleanList.add(datas);
         }
         
-        System.out.println("El array limpio que va a trabajar");
+     
         for(RequestSatelitesDTO s : newCleanList){
             System.out.println(s.getName());
         }
