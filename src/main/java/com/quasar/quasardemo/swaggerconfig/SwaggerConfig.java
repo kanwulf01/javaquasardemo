@@ -35,10 +35,11 @@ public class SwaggerConfig {
         .apiInfo(apiInfo())
         .securityContexts(Collections.singletonList(securityContext()))
         .securitySchemes(Collections.singletonList(apiToken()))
+        .useDefaultResponseMessages(false) 
         .enable(true)
         .select()
         .apis(RequestHandlerSelectors.basePackage("com.quasar.quasardemo"))
-        .paths(PathSelectors.any())
+        //.paths(PathSelectors.any())
         .build();
   }
   

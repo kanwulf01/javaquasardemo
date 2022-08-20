@@ -11,14 +11,14 @@ com\quasar\quasardemo\DTOs\ServiceResponse.class
 com\quasar\quasardemo\enums\SateliteBind.class
 com\quasar\quasardemo\swaggerconfig\SwaggerConfig.class
 com\quasar\quasardemo\swaggerconfig\WebSecurityConfig.class
-com\quasar\quasardemo\Controlador.class
 com\quasar\quasardemo\services\SateliteService.class
-com\quasar\quasardemo\TopSecretSplitControllador.class
+com\quasar\quasardemo\ControladorNivel3.class
 com\quasar\quasardemo\models\RequestSatelitesDTO.class
 com\quasar\quasardemo\services\SateliteNoNameService.class
 com\quasar\quasardemo\DTOs\RequestSatelitesDTO.class
 com\quasar\quasardemo\DTOs\CoordenadaDTO.class
 com\quasar\quasardemo\DTOs\ResponseSatelitesDTO.class
+com\quasar\quasardemo\ControladorNivel2.class
 com\quasar\quasardemo\repository\SateliteRepositorie.class
 com\quasar\quasardemo\DTOs\RequesSateliteListDTO.class
 com\quasar\quasardemo\DTOs\EntityReplyDTO.class

@@ -37,13 +37,13 @@ import org.springframework.http.ResponseEntity;
  */
 @RestController
 @RequestMapping({"/topsecret"})
-public class Controlador {
+public class ControladorNivel2 {
     
     @Autowired
     private SateliteService service;
     
     /*
-    public Controlador(PersonaService services) {
+    public ControladorNivel2(PersonaService services) {
     this.service = services;
     }
     */

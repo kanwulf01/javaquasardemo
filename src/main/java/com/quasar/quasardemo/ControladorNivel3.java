@@ -29,15 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping({"/topsecret_split"})
-public class TopSecretSplitControllador {
+public class ControladorNivel3 {
     
     
     @Autowired
     private SateliteNoNameService service;
     
-    @RequestMapping(path={"/{satelite_name}"})
+    //@RequestMapping(path={"/{satelite_name}"}) //Por bugg de Swagger deje que el parametro de nombre entre por RequestParams y no por PathVariable
     @PostMapping
-    public ResponseEntity<EntityReplyDTO> Add(@RequestBody SateliteNotNameDTO data1, @PathVariable("satelite_name") String satelite_name) {
+    public ResponseEntity<EntityReplyDTO> Add(@RequestBody SateliteNotNameDTO data1, @RequestParam String satelite_name) {
         
         System.out.println(satelite_name);
         EntityReplyDTO<CoordenadaDTO> dataService = service.add(data1, satelite_name);
@@ -57,7 +57,7 @@ public class TopSecretSplitControllador {
         return ResponseEntity.ok().body(new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, dataService.getMessage(), "OK"));
     }
     
-    @RequestMapping(path={"/satelite_name"})
+    //@RequestMapping(path={"/satelite_name"})
     @GetMapping
     public ResponseEntity<EntityReplyDTO> Get(@RequestParam String satelite_name, @RequestParam  float distance, @RequestParam String[] message) {
         

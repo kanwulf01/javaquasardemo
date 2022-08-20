@@ -52,13 +52,12 @@ public class SateliteNoNameServiceImp implements SateliteNoNameService {
 
     @Override
     public SateliteNotNameDTO validateAllData(SateliteNotNameDTO data, String SateliteName) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
-        //Map<Integer,String> validateM = new HashMap<Integer, String>();
         
             
-            //validar nulls
+            //validar nulls en la data si encuentra lanzo excepciones controladas
             
+            //valido si el nombre del satelite existe comparandolo con el enums de los 3 satelites validos
             SateliteBind[] names = SateliteBind.values();
             int count = 0;
             try {

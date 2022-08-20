@@ -15,6 +15,7 @@ import com.quasar.quasardemo.DTOs.RequestSatelitesDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
 import com.quasar.quasardemo.DTOs.SateliteNotNameDTO;
 import com.quasar.quasardemo.constants.Constants;
+import com.quasar.quasardemo.enums.SateliteBind;
 import com.quasar.quasardemo.repository.SateliteRepositorie;
 import com.quasar.quasardemo.models.Satelite;
 import com.quasardemo.excepcions.PostSateliteException;
@@ -59,59 +60,44 @@ public class SateliteServiceImp implements SateliteService {
         CoordenadaDTO coordenadas = null;
         String[] SanizatedMessage = null;
         String[] messageArray = null;
-        String[][] listMessages = new String[p.getList().size()][p.getList().size()];
+        String[][] listMessages = new String[p.getList().size()][p.getList().size()]; //declaro la matriz que envio a GetMesages segun el tamaño del array de objetos que llega
         float[] distanceArr = new float[p.getList().size()];
         String message = "";
         int countData = 0;
-        if(p.getList().size() > 0 && p.getList().size() <= 3) {
-            //Envio una arreglo con datos
-           
-            //1. validar las distancias 
-            //||
-            for(int i = 0; i < p.getList().size(); i++) {
-                if(p.getList().get(i).getName() != "" && !p.getList().get(i).getName().isEmpty()) {
-                    //si una distancia es igual a 0 no se puede calcular
-                    //al menos una de las tres tiene que ser diferente de cero
+        if(p.getList().size() > 0 && p.getList().size() <= 3) { //valido que sea un arreglo de no mas de 3 objetos y mayor a 0 elementos
+
+            for(int i = 0; i < p.getList().size(); i++) {//recorro el arreglo de elementos que me llega
+                if(p.getList().get(i).getName() != "" && !p.getList().get(i).getName().isEmpty()) {// es una validacion con poco peso
+                                   
+                    distanceArr[i] = p.getList().get(i).getDistance();//guardo cada distancia 
+                    satelites.put(i, p.getList().get(i).getName());//guardo la posicion y el nombre de cada satelite al que le mandan la data
+                   
+                    messageArray = new String[p.getList().get(i).getMessages().length];//defino el nuevo array de mensajes de cada objeto que contendra solo caracteres validos 
+                    // o reemplazados por vacio
                     
-                    distanceArr[i] = p.getList().get(i).getDistance();
-                    satelites.put(i, p.getList().get(i).getName());
-                    //Creo una array de string y le defino el tamaño con el mismo tamaño de la lista de mensajes
-                    // luego cambio el formato de la lista de mensajes a array casteandolo a un array de string y lo guardo dentro de 
-                    //la variable del arreglo de strings
-                    //Esto lo meto en una lista ya instanciada de arreglos de string y lo mando como parametro a la funcion GetMessages para calcular y sanitear los
-                    //mensajes
-                    messageArray = new String[p.getList().get(i).getMessages().length];
-                    messageArray = validateMessage(p.getList().get(i).getMessages());
-                    listMessages[i] = messageArray;
+                    messageArray = validateMessage(p.getList().get(i).getMessages());//aca retorno el arreglo saneado por cada objeto 
+                    listMessages[i] = messageArray; //aca lo guardo entro de la matriz de arreglos de string para pasarlo como param a GetMessage
                     //countData ++;
                 }
                 
                 //validar los arreglos de mensajes, si algun string no se puede leer o es diferente a las letras del abecedario se reemplaza por vacio
                 
-                   //p.getList().get(i).setMessages(validateMessage(p.getList().get(i).getMessages())); // mensajes leidos
-                   // en este punto ya modifique cada lista de mensajes
+                 
             };
             
             //aca debo contruir el mensaje y la coordenada a partir de la lista y las distancias
             //guardar cada distancia en un arreglo de distancias
-            if(distanceArr.length > 0) {
-                coordenadas = this.GetLocation(distanceArr);
+            if(distanceArr.length > 0) {//valido que el arreglo de distancias sea mayor a 0
+                coordenadas = this.GetLocation(distanceArr);//retorno la coordenada
             }
-            
-            //System.out.println(coordenadas.getX() + "," + coordenadas.getY());
-            
-            
-            
-            
+                        
             // si al menos existe una distancia y un nombre de satelite se puede calcular su distancia de forma teorica
             
            
          
-         //SanizatedMessage = this.GetMessage(p.getList().get(0).getMessages(), p.getList().get(1).getMessages(), p.getList().get(2).getMessages());
-         SanizatedMessage = this.GetMessage(listMessages);
+         SanizatedMessage = this.GetMessage(listMessages);//retorno el mensaje ya "arreglado"
          
-         for(String cadena: SanizatedMessage){
-             System.out.println(cadena);
+         for(String cadena: SanizatedMessage){//construyo el mensaje
              message = message + " " + cadena;
          } 
         }
@@ -120,7 +106,7 @@ public class SateliteServiceImp implements SateliteService {
             
         }
         
-        return new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(coordenadas, message, "OK");
+        return new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(coordenadas, message, "OK");//respondo al controlador con las coordenadas y el mensaje saneado
         
         //return new ResponseSatelitesDTO<>
         //return this.repository.save(p);
@@ -173,7 +159,7 @@ public class SateliteServiceImp implements SateliteService {
             Integer emptyChar = data.getValue();
             
             if(count == 0){
-                //si es la primera iteracion asigno el primer valor a la variable de nombre variableAnterior para poder comprara con las siguiente siteraciones
+                //si es la primera iteracion asigno el primer valor a la variable de nombre variableAnterior para poder compararla con las siguientes iteraciones
                 //cual es el valor menor, este valor menor indica el menor array de mensajes que tuvo caracteres vacios para elegir el mensaje con menos
                 //caracteres vacios
                 valorAnterior = emptyChar;
@@ -203,6 +189,7 @@ public class SateliteServiceImp implements SateliteService {
     }
     
     public static String[] validateMessage(String[] message){
+        //Aca valido el string que viene en el arreglo, uso una regex para validar que sean solo caracteres validos o numeros
         int count = 0;
         String[] newMessage = new String[message.length];
         for(String cadena :message) {
@@ -228,8 +215,18 @@ public class SateliteServiceImp implements SateliteService {
         //validar qe el campo distance es diferente a null,
         //validar que listaMessages es diferente a null 
         //recorrer el arreglo que trae el objeto
+        
+        
+        //El hash me ayuda a agarrar la posicion de los objetos que tienen algun dato invalido
+        //para despues leer este mismo arreglo de objetos y pasarlo a un nuevo dejando por fuera los indices que estan en el hash
+        //es decir uso las posicion como ids de cada objeto dentreo del arreglo que llega a este metodo
         List<RequestSatelitesDTO> newCleanList = new ArrayList<RequestSatelitesDTO>();
         Map<Integer,String> validateM = new HashMap<Integer, String>();
+        
+        SateliteBind[] names = SateliteBind.values();
+        int itera = 0;
+                  
+                    
         
         for(int i = 0; i < data.getList().size(); i++) {
             //validar nulls
@@ -238,7 +235,17 @@ public class SateliteServiceImp implements SateliteService {
                 if(data.getList().get(i).getName().isEmpty()){
                     //se saca este objeto de la lista de satelites
                     validateM.put(i,"name");
-                }    
+                }else {
+                    for(SateliteBind name:  names){
+                        if(name.toString().equals(data.getList().get(i).getName()))
+                            itera++;            
+                    }
+                    
+                    if(itera==0){
+                        validateM.put(i,"name");
+                    }
+                        
+                }   
             }
             catch(Exception ex) {
                 throw new PostSateliteException("", ex); 
@@ -266,19 +273,20 @@ public class SateliteServiceImp implements SateliteService {
             }
         }
         
+        
+        //Aca saco a los que estan "marcados" segun su posicion por el hashMap y no los meto al nuevo arreglo que va a retornar
         int count = 0;
         for(RequestSatelitesDTO datas : data.getList()) {
             if(validateM.containsKey(count)){
+                count++;
                 continue;
             }
             newCleanList.add(datas);
+            count++;
         }
         
-     
-        for(RequestSatelitesDTO s : newCleanList){
-            System.out.println(s.getName());
-        }
-        return new RequesSateliteListDTO(newCleanList);
+    
+        return new RequesSateliteListDTO(newCleanList);//retorno la nueva lista con los objetos validados
         
     }
 
