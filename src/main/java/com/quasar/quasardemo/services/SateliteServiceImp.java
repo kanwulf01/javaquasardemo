@@ -151,7 +151,6 @@ public class SateliteServiceImp implements SateliteService {
             arrMessagePosition++;
         }
         List<Integer> cleanMessages = new ArrayList<Integer>();
-        System.out.println(validateM.size());
         //recorro el hash y veo cual tiene el menor numero de cadenas vacias
         int valorAnterior = 0;
         int count = 0;
@@ -162,9 +161,7 @@ public class SateliteServiceImp implements SateliteService {
              
             Integer key = data.getKey();
             Integer emptyChar = data.getValue();
-            System.out.println("datos de posicion y numero de vacios");
-            System.out.println(key);
-            System.out.println(emptyChar);
+            
             if(emptyChar == 0) {
                 cleanMessages.add(key);
                
@@ -192,15 +189,13 @@ public class SateliteServiceImp implements SateliteService {
             
         }
         
-        System.out.println("tamaño de la lista que tiene mensajes limpios");
-        System.out.println(cleanMessages.size());
-        
+       
        
             //Encontro mas de 2 mensajes limpios sin errores
             //agarre el de la posicion mas grande
             int mayorSize = 0;
             for(int i = 0; i < cleanMessages.size(); i++){
-                System.out.println("posicione de la lista que tiene mensajes limpios");
+                
                     System.out.println(cleanMessages.get(i));
                     if(mess1[cleanMessages.get(i)].length > mayorSize){
                         mayorSize = mess1[cleanMessages.get(i)].length;
