@@ -13,6 +13,7 @@ import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
 import com.quasar.quasardemo.services.SateliteService;
 import com.quasar.quasardemo.models.ResponseDTO;
 import com.quasar.quasardemo.models.Satelite;
+import com.quasardemo.excepcions.PostSateliteException;
 import io.swagger.annotations.ApiParam;
 import static java.lang.Integer.parseInt;
 import java.util.HashMap;
@@ -55,6 +56,13 @@ public class ControladorNivel2 {
         
         
         EntityReplyDTO<CoordenadaDTO> dataService = service.add(data1);
+        try {
+            System.out.print(dataService.getData().getX());
+        System.out.print(dataService.getData().getY());
+        }
+        catch(Exception ex) {
+            throw new  PostSateliteException(""); 
+        }
         
         CoordenadaDTO resxy = new CoordenadaDTO(dataService.getData().getX(), dataService.getData().getY());
         //return new ResponseSatelitesDTO<CoordenadaDTO> { data =  }

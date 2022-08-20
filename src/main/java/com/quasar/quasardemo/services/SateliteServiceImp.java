@@ -140,24 +140,35 @@ public class SateliteServiceImp implements SateliteService {
         
         for(String[] messages : mess1) {
             for(int i = 0; i < messages.length; i++) {
-                if(messages[i].isEmpty())
+                if(messages[i].isEmpty()){
                     minorAccert++;
+                }
+                    
             }
             
             validateM.put(arrMessagePosition, minorAccert);
             minorAccert = 0;
             arrMessagePosition++;
         }
-        
+        List<Integer> cleanMessages = new ArrayList<Integer>();
+        System.out.println(validateM.size());
         //recorro el hash y veo cual tiene el menor numero de cadenas vacias
         int valorAnterior = 0;
         int count = 0;
         int keyData = 0;
+        int count2 = 0;
+        int equals = 0;
         for(Map.Entry<Integer, Integer> data : validateM.entrySet()){
              
             Integer key = data.getKey();
             Integer emptyChar = data.getValue();
-            
+            System.out.println("datos de posicion y numero de vacios");
+            System.out.println(key);
+            System.out.println(emptyChar);
+            if(emptyChar == 0) {
+                cleanMessages.add(key);
+               
+            }
             if(count == 0){
                 //si es la primera iteracion asigno el primer valor a la variable de nombre variableAnterior para poder compararla con las siguientes iteraciones
                 //cual es el valor menor, este valor menor indica el menor array de mensajes que tuvo caracteres vacios para elegir el mensaje con menos
@@ -171,10 +182,42 @@ public class SateliteServiceImp implements SateliteService {
                 //que es el que tiene el array con menos caracteres vacios y por lo tanto el mensaje mas completo;
                 valorAnterior = emptyChar;
                 keyData = key;
+            }else {
+                //que pasa si tienen los mismos caracteres corruptos
+                //agarre la posicion key
+                equals++;
             }
             
             
+            
         }
+        
+        System.out.println("tamaño de la lista que tiene mensajes limpios");
+        System.out.println(cleanMessages.size());
+        
+       
+            //Encontro mas de 2 mensajes limpios sin errores
+            //agarre el de la posicion mas grande
+            int mayorSize = 0;
+            for(int i = 0; i < cleanMessages.size(); i++){
+                System.out.println("posicione de la lista que tiene mensajes limpios");
+                    System.out.println(cleanMessages.get(i));
+                    if(mess1[cleanMessages.get(i)].length > mayorSize){
+                        mayorSize = mess1[cleanMessages.get(i)].length;
+                        keyData = cleanMessages.get(i);
+                    }
+            }
+            if(equals == mess1.length) {
+                int mayorSize2 = 0;
+                for(int i = 0; i < equals; i++) {
+                    if(mess1[cleanMessages.get(i)].length > mayorSize){
+                        mayorSize = mess1[cleanMessages.get(i)].length;
+                        keyData = cleanMessages.get(i);
+                    }
+                }
+            }
+            
+          
         
         return mess1[keyData];
     }
@@ -244,7 +287,7 @@ public class SateliteServiceImp implements SateliteService {
                     if(itera==0){
                         validateM.put(i,"name");
                     }
-                        
+                     itera = 0;   
                 }   
             }
             catch(Exception ex) {
@@ -253,7 +296,7 @@ public class SateliteServiceImp implements SateliteService {
             
           
             try {
-                if(data.getList().get(i).getDistance() > 0){
+                if(data.getList().get(i).getDistance() == 0){
                     //se saca este objeto de la lista de satelites
                     validateM.put(i,"distance");
                 }    
