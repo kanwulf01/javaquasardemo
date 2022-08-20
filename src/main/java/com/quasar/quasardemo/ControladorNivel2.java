@@ -13,6 +13,7 @@ import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
 import com.quasar.quasardemo.services.SateliteService;
 import com.quasar.quasardemo.models.ResponseDTO;
 import com.quasar.quasardemo.models.Satelite;
+import io.swagger.annotations.ApiParam;
 import static java.lang.Integer.parseInt;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class ControladorNivel2 {
     
 
     @PostMapping
+    @ApiParam(hidden = true) 
     public ResponseEntity<EntityReplyDTO> Add(@RequestBody RequesSateliteListDTO data1) {
         
         

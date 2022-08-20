@@ -4,6 +4,7 @@
  */
 package com.quasar.quasardemo.DTOs;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public class RequesSateliteListDTO {
     
+    @ApiModelProperty(required = false, hidden = true)
     public List<RequestSatelitesDTO> satelites;
     
     public RequesSateliteListDTO(){}

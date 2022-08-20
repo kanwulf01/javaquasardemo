@@ -4,12 +4,17 @@
  */
 package com.quasar.quasardemo.DTOs;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *
  * @author Lenovo
  */
 public class SateliteNotNameDTO {
+    
+    @ApiModelProperty(required = false, hidden = true)
     public float _distance;
+    @ApiModelProperty(required = false, hidden = true)
     public String[] _messages = null;
     
     public SateliteNotNameDTO(float distance, String[] listaMessages ) {

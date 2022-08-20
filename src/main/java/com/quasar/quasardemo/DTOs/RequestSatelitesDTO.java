@@ -4,6 +4,7 @@
  */
 package com.quasar.quasardemo.DTOs;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 
 /**
@@ -11,40 +12,44 @@ import java.util.List;
  * @author Lenovo
  */
 public class RequestSatelitesDTO {
-    public String _name;
-    public float _distance;
-    public String[] _messages = null;
+    
+    @ApiModelProperty(required = false, hidden = true)
+    public String name;
+    @ApiModelProperty(required = false, hidden = true)
+    public float distance;
+    @ApiModelProperty(required = false, hidden = true)
+    public String[] messages = null;
     
     public RequestSatelitesDTO(String name, float distance, String[] listaMessages ) {
-        this._name = name;
-        this._distance = distance;
-        this._messages = listaMessages;
+        this.name = name;
+        this.distance = distance;
+        this.messages = listaMessages;
     }
 
     public void setName(String _name) {
-        this._name = _name;
+        this.name = _name;
     }
 
     public void setDistance(float _distance) {
-        this._distance = _distance;
+        this.distance = _distance;
     }
 
     public void setMessages(String[] _messages) {
-        this._messages = _messages;
+        this.messages = _messages;
     }
 
     public String getName() {
-        return _name;
+        return name;
     }
 
     public float getDistance() {
-        return _distance;
+        return distance;
     }
 
     public String[] getMessages() {
-        String[] messagesCastArray = new String[this._messages.length];
-        for(int i = 0; i < this._messages.length; i++) {
-            messagesCastArray[i] = this._messages[i];
+        String[] messagesCastArray = new String[this.messages.length];
+        for(int i = 0; i < this.messages.length; i++) {
+            messagesCastArray[i] = this.messages[i];
         }
         
         return messagesCastArray;

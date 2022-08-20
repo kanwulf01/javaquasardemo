@@ -32,7 +32,7 @@ public class SwaggerConfig {
   @Bean
   public Docket springBootApis() {
     return new Docket(DocumentationType.SWAGGER_2)
-        .apiInfo(apiInfo())
+        //.apiInfo(apiInfo())
         .securityContexts(Collections.singletonList(securityContext()))
         .securitySchemes(Collections.singletonList(apiToken()))
         .useDefaultResponseMessages(false) 
