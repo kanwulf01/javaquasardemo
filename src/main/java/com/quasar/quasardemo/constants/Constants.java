@@ -14,4 +14,5 @@ public class Constants {
     public static final CoordenadaDTO kenobi = new CoordenadaDTO(-500, -200);
     public static final CoordenadaDTO skywalker = new CoordenadaDTO(100, -100);
     public static  final CoordenadaDTO sato = new CoordenadaDTO(500, 100);
+    public static final String avaliableNames = "[a-zA-Z0-9]*";
 }

@@ -6,18 +6,11 @@ package com.quasar.quasardemo.services;
 
 import com.quasar.quasardemo.DTOs.CoordenadaDTO;
 import com.quasar.quasardemo.DTOs.EntityReplyDTO;
-import com.quasar.quasardemo.DTOs.RequesSateliteListDTO;
-import com.quasar.quasardemo.DTOs.RequestSatelitesDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
 import com.quasar.quasardemo.DTOs.SateliteNotNameDTO;
 import com.quasar.quasardemo.enums.SateliteBind;
-import com.quasar.quasardemo.repository.SateliteRepositorie;
 import static com.quasar.quasardemo.services.SateliteServiceImp.validateMessage;
 import com.quasardemo.excepcions.PostSateliteException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

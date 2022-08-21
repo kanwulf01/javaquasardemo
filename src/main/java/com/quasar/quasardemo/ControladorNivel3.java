@@ -6,16 +6,12 @@ package com.quasar.quasardemo;
 
 import com.quasar.quasardemo.DTOs.CoordenadaDTO;
 import com.quasar.quasardemo.DTOs.EntityReplyDTO;
-import com.quasar.quasardemo.DTOs.RequesSateliteListDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
 import com.quasar.quasardemo.DTOs.SateliteNotNameDTO;
 import com.quasar.quasardemo.services.SateliteNoNameService;
-import com.quasar.quasardemo.services.SateliteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,16 +39,9 @@ public class ControladorNivel3 {
         EntityReplyDTO<CoordenadaDTO> dataService = service.add(data1, satelite_name);
         
         //recibe la data aca
-        
-        
-        
         // Se puede validar si la distancia es un numero, si es diferente a null o a cero
-        
-        
-        System.out.println("Llego la info");
-        //System.out.println(data1.size());
+       
         CoordenadaDTO resxy = new CoordenadaDTO(dataService.getData().getX(),dataService.getData().getY());
-        //return new ResponseSatelitesDTO<CoordenadaDTO> { data =  }
         
         return ResponseEntity.ok().body(new ResponseSatelitesDTO<CoordenadaDTO>().getResponse(resxy, dataService.getMessage(), "OK"));
     }
@@ -62,8 +51,6 @@ public class ControladorNivel3 {
     public ResponseEntity<EntityReplyDTO> Get(@RequestParam String satelite_name, @RequestParam  float distance, @RequestParam String[] message) {
         
         
-        //@RequestParam Optional<String>
-        System.out.println(message.length);
         for(String cadena : message){
             //System.out.println(cadena);
         }

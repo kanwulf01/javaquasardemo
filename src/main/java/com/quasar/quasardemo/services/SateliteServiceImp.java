@@ -13,20 +13,16 @@ import com.quasar.quasardemo.DTOs.EntityReplyDTO;
 import com.quasar.quasardemo.DTOs.RequesSateliteListDTO;
 import com.quasar.quasardemo.DTOs.RequestSatelitesDTO;
 import com.quasar.quasardemo.DTOs.ResponseSatelitesDTO;
-import com.quasar.quasardemo.DTOs.SateliteNotNameDTO;
-import com.quasar.quasardemo.constants.Constants;
+import static com.quasar.quasardemo.constants.Constants.avaliableNames;
 import com.quasar.quasardemo.enums.SateliteBind;
 import com.quasar.quasardemo.repository.SateliteRepositorie;
-import com.quasar.quasardemo.models.Satelite;
 import com.quasardemo.excepcions.PostSateliteException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -114,8 +110,8 @@ public class SateliteServiceImp implements SateliteService {
 
     @Override
     public CoordenadaDTO GetLocation(float ...distances) {
-        for(int i = 0; i < distances.length; i++)
-            System.out.println(distances[i]);
+        //for(int i = 0; i < distances.length; i++)
+            //System.out.println(distances[i]);
         //Aca se simula el calculo
         //tengo un hash con la posicion del arrgelo que contiene cada objeto por nombre del satelite: variable satelites Map<position del arreglo, Nombre del satelite>
         //tengo un enum con los nombres de los 3 satelites
@@ -132,8 +128,6 @@ public class SateliteServiceImp implements SateliteService {
 
     @Override
     public  String[] GetMessage(String[] ...mess1) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        List<String> messageBetterState = new ArrayList<String>();
         Map<Integer,Integer> validateM = new HashMap<Integer, Integer>(); // este hash contendra, la posicion del array y el numero de veces que encontro cadenas vacias
         int minorAccert = 0;
         int arrMessagePosition = 0; 
@@ -196,7 +190,6 @@ public class SateliteServiceImp implements SateliteService {
             int mayorSize = 0;
             for(int i = 0; i < cleanMessages.size(); i++){
                 
-                    System.out.println(cleanMessages.get(i));
                     if(mess1[cleanMessages.get(i)].length > mayorSize){
                         mayorSize = mess1[cleanMessages.get(i)].length;
                         keyData = cleanMessages.get(i);
@@ -232,7 +225,7 @@ public class SateliteServiceImp implements SateliteService {
         String[] newMessage = new String[message.length];
         for(String cadena :message) {
             
-            if(cadena.isEmpty() || !cadena.matches("[a-zA-Z0-9]*") ){
+            if(cadena.isEmpty() || !cadena.matches(avaliableNames) ){
                 newMessage[count] = "";
                 count++;
                 continue;
